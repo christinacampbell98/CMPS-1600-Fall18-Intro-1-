@@ -1,4 +1,5 @@
-
+//Sam Eigen and Christina Campbell
+//Lab2 
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
