@@ -32,10 +32,7 @@ public class Calculator extends JFrame {
     private double SolveTEMP;
     private JTextField jtfResult;
 
-//    Boolean addBool = false;
-//    Boolean subBool = false;
-//    Boolean divBool = false;
-//    Boolean mulBool = false;
+
 
     public String display = "";
 
@@ -97,7 +94,7 @@ public class Calculator extends JFrame {
         jbtSolve.addActionListener(new ListenToSolve());
         jbtClear.addActionListener(new ListenToClear());
 
-    } //JavaCaluclator()
+    } 
 
 
 
@@ -173,28 +170,23 @@ public class Calculator extends JFrame {
 
     class ListenToAdd implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-//            TEMP = Double.parseDouble(jtfResult.getText());
             display = jtfResult.getText();
             jtfResult.setText(display + "+");
-//            addBool = true;
+
         }
     }
 
     class ListenToSubtract implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-//            TEMP = Double.parseDouble(jtfResult.getText());
             display = jtfResult.getText();
             jtfResult.setText(display + "-");
-//            subBool = true;
         }
     }
 
     class ListenToMultiply implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-//            TEMP = Double.parseDouble(jtfResult.getText());
             display = jtfResult.getText();
             jtfResult.setText(display + "*");
-//            mulBool = true;
         }
     }
 
@@ -207,7 +199,6 @@ public class Calculator extends JFrame {
 
     class ListenToPar1 implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-//            TEMP = Double.parseDouble(jtfResult.getText());
             display = jtfResult.getText();
             jtfResult.setText(display + "(");
         }
@@ -215,7 +206,6 @@ public class Calculator extends JFrame {
 
     class ListenToPar2 implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-//            TEMP = Double.parseDouble(jtfResult.getText());
             display = jtfResult.getText();
             jtfResult.setText(display + ")");
         }
