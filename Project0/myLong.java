@@ -667,8 +667,8 @@ public class myLong {
         System.out.println("Please enter an integer up to 100 digits long: ");
         String enteredValue2 = scnr.nextLine();
 
-        myLong longNum = new myLong(enteredValue);
-        myLong longNum2 = new myLong(enteredValue2);
+        myLong longNum = new myLong();
+        myLong longNum2 = new myLong();
 
         ArrayList<Integer> long1= new ArrayList<>();
         ArrayList<Integer> long2= new ArrayList<>();
