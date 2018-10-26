@@ -614,28 +614,33 @@ public class myLong {
         Collections.reverse(long1);
         Collections.reverse(long2);
 
-        for (int k=0; k <long2.size(); k++) {
-            int i=k;
-            int j=k;
-            if ((long2.get(i)-long1.get(j)) <0) {
-                i++;
-                while (i > j) {
-                    if (long2.get(i) > 0) {
-                        long2.set(i,(long2.get(i)-1));
-                        long2.set(i-1,(long2.get(i-1)+10));
-                        i--;
-                    }
-                    else {
-                        i++;
+        if(long1.size() !=1 && long2.size()!=1) {
+            for (int k = 0; k < long2.size(); k++) {
+                int i = k;
+                int j = k;
+                if ((long2.get(i) - long1.get(j)) < 0) {
+                    i++;
+                    while (i > j) {
+                        if (long2.get(i) > 0) {
+                            long2.set(i, (long2.get(i) - 1));
+                            long2.set(i - 1, (long2.get(i - 1) + 10));
+                            i--;
+                        } else {
+                            i++;
+                        }
                     }
                 }
-            }
-            if(long2.get(i)>0) {
-                int x= (long2.get(i) - long1.get(j));
-                // System.out.println(x);
-                subtractArray.add(x);
+                if (long2.get(i) > 0) {
+                    int x = (long2.get(i) - long1.get(j));
+                    // System.out.println(x);
+                    subtractArray.add(x);
 
+                }
             }
+        }
+        if (long1.size() ==1 && long2.size()==1) {
+            int x= long1.get(0) - long2.get(0);
+            subtractArray.add(x);
         }
         Collections.reverse(subtractArray);
         if (initLength < 0) {
@@ -677,12 +682,13 @@ public class myLong {
 
         longNum.setLong(enteredValue);
         longNum2.setLong(enteredValue2);
+        System.out.println(longNum);
+        System.out.println(longNum2);
+
 
         System.out.println(longNum.add(longNum2));
         System.out.println(longNum.multiply(longNum2)) ;
         System.out.println(longNum.subtract(longNum2));
-        System.out.println(longNum);
-        System.out.println(longNum2);
 
 
     }
