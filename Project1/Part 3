@@ -1,0 +1,1411 @@
+/** @Author: Christina Campbell and Sam Eigen
+ *
+ */
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+
+
+public class Calculator extends JFrame {
+    public int par1Counter = 0;
+    public int par2Counter = 0;
+    ArrayList<Character> displayArray = new ArrayList<>();
+
+    private JButton jbtNum1;
+    private JButton jbtNum2;
+    private JButton jbtNum3;
+    private JButton jbtNum4;
+    private JButton jbtNum5;
+    private JButton jbtNum6;
+    private JButton jbtNum7;
+    private JButton jbtNum8;
+    private JButton jbtNum9;
+    private JButton jbtNum0;
+    private JButton jbtClear;
+    private JButton jbtAdd;
+    private JButton jbtSubtract;
+    private JButton jbtMultiply;
+    private JButton jbtParantheses1;
+    private JButton jbtParantheses2;
+    private JButton jbtSolve;
+
+    private JTextField jtfResult;
+
+    public String display = "";
+
+    public Calculator() {
+
+        JPanel NumberPanel = new JPanel();
+        NumberPanel.setLayout(new GridLayout(4, 3));
+        NumberPanel.add(jbtNum1 = new JButton("1"));
+        NumberPanel.add(jbtNum2 = new JButton("2"));
+        NumberPanel.add(jbtNum3 = new JButton("3"));
+        NumberPanel.add(jbtNum4 = new JButton("4"));
+        NumberPanel.add(jbtNum5 = new JButton("5"));
+        NumberPanel.add(jbtNum6 = new JButton("6"));
+        NumberPanel.add(jbtNum7 = new JButton("7"));
+        NumberPanel.add(jbtNum8 = new JButton("8"));
+        NumberPanel.add(jbtNum9 = new JButton("9"));
+        NumberPanel.add(jbtNum0 = new JButton("0"));
+
+        JPanel TextPanel = new JPanel();
+        TextPanel.setLayout(new FlowLayout());
+        TextPanel.add(jtfResult = new JTextField(20));
+        jtfResult.setHorizontalAlignment(JTextField.RIGHT);
+        jtfResult.setEditable(false);
+
+        JPanel OperationPanel = new JPanel();
+        OperationPanel.setLayout(new GridLayout(7, 1));
+        OperationPanel.add(jbtAdd = new JButton("+"));
+        OperationPanel.add(jbtSubtract = new JButton("-"));
+        OperationPanel.add(jbtMultiply = new JButton("*"));
+        OperationPanel.add(jbtParantheses1 = new JButton("("));
+        OperationPanel.add(jbtParantheses2 = new JButton(")"));
+        OperationPanel.add(jbtSolve = new JButton("="));
+        OperationPanel.add(jbtClear = new JButton("C"));
+
+        JPanel FullPanel = new JPanel();
+        FullPanel.setLayout(new GridLayout());
+        FullPanel.add(TextPanel, BorderLayout.NORTH);
+        FullPanel.add(NumberPanel, BorderLayout.SOUTH);
+        FullPanel.add(OperationPanel, BorderLayout.EAST);
+
+        add(FullPanel);
+
+        jbtNum1.addActionListener(new ListenToOne());
+        jbtNum2.addActionListener(new ListenToTwo());
+        jbtNum3.addActionListener(new ListenToThree());
+        jbtNum4.addActionListener(new ListenToFour());
+        jbtNum5.addActionListener(new ListenToFive());
+        jbtNum6.addActionListener(new ListenToSix());
+        jbtNum7.addActionListener(new ListenToSeven());
+        jbtNum8.addActionListener(new ListenToEight());
+        jbtNum9.addActionListener(new ListenToNine());
+        jbtNum0.addActionListener(new ListenToZero());
+
+        jbtAdd.addActionListener(new ListenToAdd());
+        jbtSubtract.addActionListener(new ListenToSubtract());
+        jbtMultiply.addActionListener(new ListenToMultiply());
+        jbtParantheses1.addActionListener(new ListenToPar1());
+        jbtParantheses2.addActionListener(new ListenToPar2());
+        jbtSolve.addActionListener(new ListenToSolve());
+        jbtClear.addActionListener(new ListenToClear());
+
+    }
+
+
+    class ListenToOne implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display = jtfResult.getText();
+            jtfResult.setText(display + "1");
+        }
+    }
+
+    class ListenToTwo implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display = jtfResult.getText();
+            jtfResult.setText(display + "2");
+        }
+    }
+
+    class ListenToThree implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display = jtfResult.getText();
+            jtfResult.setText(display + "3");
+        }
+    }
+
+    class ListenToFour implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display = jtfResult.getText();
+            jtfResult.setText(display + "4");
+        }
+    }
+
+    class ListenToFive implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display = jtfResult.getText();
+            jtfResult.setText(display + "5");
+        }
+    }
+
+    class ListenToSix implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display = jtfResult.getText();
+            jtfResult.setText(display + "6");
+        }
+    }
+
+    class ListenToSeven implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display = jtfResult.getText();
+            jtfResult.setText(display + "7");
+        }
+    }
+
+    class ListenToEight implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display = jtfResult.getText();
+            jtfResult.setText(display + "8");
+        }
+    }
+
+    class ListenToNine implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display = jtfResult.getText();
+            jtfResult.setText(display + "9");
+        }
+    }
+
+    class ListenToZero implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display = jtfResult.getText();
+            jtfResult.setText(display + "0");
+        }
+    }
+
+    class ListenToAdd implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display = jtfResult.getText();
+            jtfResult.setText(display + "+");
+        }
+    }
+
+    class ListenToSubtract implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display = jtfResult.getText();
+            jtfResult.setText(display + "-");
+        }
+    }
+
+    class ListenToMultiply implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display = jtfResult.getText();
+            jtfResult.setText(display + "*");
+        }
+    }
+
+    class ListenToClear implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            display= "";
+            jtfResult.setText("");
+            par1Counter=0;
+            par2Counter=0;
+        }
+    }
+
+
+    class ListenToPar1 implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+
+            par1Counter++;
+            display = jtfResult.getText();
+            jtfResult.setText(display + "(");
+        }
+    }
+
+    class ListenToPar2 implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            par2Counter++;
+            display = jtfResult.getText();
+            jtfResult.setText(display + ")");
+        }
+    }
+
+    //
+    class ListenToSolve implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            try{
+                display = jtfResult.getText();
+                int valid = isValidInput(display);
+                parenthesesSolve(valid,par1Counter, display);
+            }
+            catch(Exception g){
+                jtfResult.setText("Invalid Input (Press C to clear)");
+            }
+        }
+
+
+    }
+
+
+
+    public String subtractionCall(String num1, String num2) {
+        myLong long1 = new myLong(num1);
+        myLong long2 = new myLong(num2);
+        long1.setLong(num1);
+        long2.setLong(num2);
+
+        ArrayList<Integer> subtract = new ArrayList<>();
+        subtract = long1.subtract(long2);
+        String addString = "";
+        for (int k = 0; k < subtract.size(); k++) {
+            addString += subtract.get(k);
+        }
+
+        return addString;
+    }
+
+    public String additionCall(String num1, String num2) {
+        System.out.println("called add");
+        myLong long1 = new myLong(num1);
+        myLong long2 = new myLong(num2);
+        ArrayList<Integer> longNum1 = new ArrayList<>();
+        ArrayList<Integer> longNum2 = new ArrayList<>();
+        long1.setLong(num1);
+        long2.setLong(num2);
+        ArrayList<Integer> add = new ArrayList<>();
+        add = long1.add(long2);
+        String addString = "";
+        for (int k = 0; k < add.size(); k++) {
+            addString += add.get(k);
+        }
+        return addString;
+    }
+
+    public String multiplicationCall(String num1, String num2) {
+        myLong long1 = new myLong(num1);
+        myLong long2 = new myLong(num2);
+        long1.setLong(num1);
+        long2.setLong(num2);
+        ArrayList<Integer> mult = new ArrayList<>();
+        mult = long1.multiply(long2);
+        String multString = "";
+        for (int k = 0; k < mult.size(); k++) {
+            multString += mult.get(k);
+        }
+        return multString;
+    }
+
+    public String parenthesesSolve(int valid,int par1Counter, String solve) {
+        String parSolve= "";
+        int parCounter= par1Counter;
+        String newSolve= solve;
+        if (valid==0) {
+            if (solve.contains("(")) {
+                int firstOpenIndex = solve.indexOf("(");
+                while (parCounter > 0) {
+                    parCounter--;
+
+                    int openIndex = newSolve.lastIndexOf("(");
+                    int closeIndex = newSolve.indexOf(")");
+                    if (openIndex < closeIndex) {
+                        String numbers = newSolve.substring(openIndex + 1, closeIndex);
+                        parSolve = callMethods(0, numbers);
+                        newSolve = newSolve.substring(0, openIndex) + parSolve + newSolve.substring(closeIndex + 1);
+                    }
+                    if (closeIndex < openIndex) {
+                        openIndex = newSolve.lastIndexOf("(");
+                        closeIndex = newSolve.lastIndexOf(")");
+                        String numbers = newSolve.substring(openIndex + 1, closeIndex);
+                        parSolve = callMethods(0, numbers);
+                        if (closeIndex != newSolve.length() - 1) {
+                            newSolve = newSolve.substring(0, openIndex) + parSolve + newSolve.substring(closeIndex + 1);
+                        }
+                        if (closeIndex == newSolve.length() - 1) {
+                            newSolve = newSolve.substring(0, openIndex) + parSolve;
+                        }
+                    }
+
+
+                }
+                jtfResult.setText(callMethods(0,newSolve));
+            }
+            else{
+                jtfResult.setText(callMethods(0, newSolve));
+            }
+        }
+        return solve;
+    }
+
+
+    public String multiplyMethod(String solve) {
+        String[] numberArray;
+        numberArray = solve.split("\\*");
+        ArrayList<String> numberArrayList = new ArrayList<>();
+        for (int i = 0; i < numberArray.length; i++) {
+            numberArrayList.add(numberArray[i]);
+        }
+        while (numberArrayList.size() >= 2) {
+            String number1 = numberArrayList.get(0);
+            String number2 = numberArrayList.get(1);
+            String newNumber = multiplicationCall(number1, number2);
+            numberArrayList.set(0, newNumber);
+            numberArrayList.remove(1);
+        }
+        String solvedDisplay = numberArrayList.get(0);
+        return solvedDisplay;
+    }
+
+
+    public String addMethod(String solve) {
+        String[] numberArray;
+        numberArray = solve.split("\\+");
+        ArrayList<String> numberArrayList = new ArrayList<>();
+        for (int i = 0; i < numberArray.length; i++) {
+            numberArrayList.add(numberArray[i]);
+        }
+        while (numberArrayList.size() >= 2) {
+            String number1 = numberArrayList.get(0);
+            String number2 = numberArrayList.get(1);
+            String newNumber = additionCall(number1, number2);
+            numberArrayList.set(0, newNumber);
+            numberArrayList.remove(1);
+        }
+        String solvedDisplay = numberArrayList.get(0);
+        return solvedDisplay;
+    }
+
+    public String subMethod(String solve) {
+        String[] numberArray;
+        numberArray = solve.split("\\-");
+        ArrayList<String> numberArrayList = new ArrayList<>();
+        for (int i = 0; i < numberArray.length; i++) {
+            numberArrayList.add(numberArray[i]);
+        }
+        if (!(solve.indexOf("-") == 0)) {
+            while (numberArrayList.size() >= 2) {
+                String newNumber="";
+                String number1 = numberArrayList.get(0);
+                String number2 = numberArrayList.get(1);
+                if (number1.charAt(0) != '-') {
+                   newNumber = subtractionCall(number1, number2);
+                }
+                if (number1.charAt(0)=='-') {
+                   newNumber = "-" + additionCall(number1.substring(1), number2);
+                }
+                numberArrayList.set(0, newNumber);
+                numberArrayList.remove(1);
+            }
+            String solvedDisplay = numberArrayList.get(0);
+            return solvedDisplay;
+        } else {
+            String solvedDisplay = solve;
+            return solvedDisplay;
+
+        }
+    }
+
+
+
+    public String callMethods(int valid, String solve) {
+        String[] numberArray;
+        String solvedNumber= "";
+
+        if (valid == 0) {
+            if (!(solve.contains("-") == true) && !(solve.contains("+")) && !(solve.contains("*"))) { //for mult and sub and add
+                solvedNumber = solve;
+            }
+            if (solve.contains("*") == true && !solve.contains("-") && !solve.contains("+")) { // for multiply without adding or subtracting
+                solvedNumber=multiplyMethod(solve);
+            }
+
+            if (solve.contains("+") == true && !solve.contains("*") && !solve.contains("-")) { // for add without mult or subtracting
+                solvedNumber=addMethod(solve);
+            }
+
+            if (solve.contains("-") == true && !solve.contains("*") && !solve.contains("+")) { // for sub without mult or add
+                if ((solve.indexOf("-")==0) && (solve.lastIndexOf("-")!=0)) {
+
+                    int lastNeg= solve.lastIndexOf("-");
+                    String newSolve = solve.substring(1,lastNeg) + "+" + solve.substring(lastNeg +1);
+                    solvedNumber= "-" + callMethods(0,newSolve);
+                 }
+                else {
+                    solvedNumber=subMethod(solve);
+                }
+
+            }
+
+            if ((solve.contains("*") == true) && (solve.contains("+"))&& !solve.contains("-")) { // for mult and add
+                int multIndex = solve.indexOf("*");
+                int addIndex = solve.indexOf("+");
+                if (multIndex < addIndex) {
+                    String newSolveString = solve.substring(0, addIndex);
+                    String newMultNumber = callMethods(0,newSolveString);
+                    String newAddNumber = newMultNumber + solve.substring(addIndex);
+                    solvedNumber=callMethods(0,newAddNumber);
+                }
+                if(multIndex > addIndex){
+                    String newSolveString = solve.substring(addIndex+1);
+                    String newMultNumber = callMethods(0,newSolveString);
+                    String newAddNumber =  solve.substring(0, addIndex+1) + newMultNumber;
+                    solvedNumber=callMethods(0,newAddNumber);
+
+                }
+            }
+
+            if ((solve.contains("*") == true) && (solve.contains("-")) && !(solve.contains("+"))) { //for sub and mult
+                int multIndex = solve.indexOf("*");
+                int subIndex = solve.indexOf("-");
+                int subIndex2= solve.lastIndexOf("-");
+                if (multIndex < subIndex) {
+                    if (subIndex==subIndex2) {
+                        if ((subIndex == 0)) {
+                            String nonNegString = solve.substring(0, multIndex + 1) + solve.substring(multIndex + 2);
+                            solvedNumber = "-" + callMethods(0, nonNegString);
+                        }
+                        if (subIndex == multIndex + 1) {
+                            String nonNegString = solve.substring(0, multIndex + 1) + solve.substring(subIndex + 1);
+                            solvedNumber = "-" + callMethods(0, nonNegString);
+                        } else {
+                            String newSolveString = solve.substring(0, subIndex);
+                            String newMultNumber = callMethods(0, newSolveString);
+                            String newSubNumber = newMultNumber + solve.substring(subIndex);
+                            solvedNumber = callMethods(0, newSubNumber);
+                        }
+                    }
+                    if (subIndex != subIndex2) {
+                        String newMultString = solve.substring(0, subIndex2);
+                        String newMultNumber = callMethods(0, newMultString);
+                        String newSubString= newMultNumber + solve.substring(subIndex2);
+                        solvedNumber= callMethods(0,newSubString);
+
+                    }
+                }
+
+                if(multIndex > subIndex){
+                    if ((subIndex==0) && (subIndex2!=subIndex)) {
+                        if (subIndex2 > multIndex) {//-1*3-2
+                            String nonNegString= solve.substring(1,subIndex2);
+                            String newMultNumber= "-" + callMethods(0, nonNegString);
+                            String newSubNumber= newMultNumber + solve.substring(subIndex2);
+                            solvedNumber= callMethods(0, newSubNumber);
+                        }
+                        if (subIndex2 < multIndex) { //-1 -2*3
+                            String nonNegString= solve.substring(subIndex2+1);
+                            String newMultNumber= "-" + callMethods(0, nonNegString);
+                            String newSubNumber= solve.substring(0,subIndex2) + newMultNumber;
+                            solvedNumber= callMethods(0, newSubNumber);
+                        }
+                     }
+                    if ((subIndex==0) && (subIndex2==subIndex)){ // -1*2
+                        String nonNegString= solve.substring(1);
+                        solvedNumber = "-" + callMethods(0,nonNegString);
+                    }
+                    if ((subIndex==0) && (subIndex2== multIndex+1)) { // -1*-2
+                        String nonNegString = solve.substring(1, multIndex+1) + solve.substring(multIndex+2);
+                        solvedNumber= callMethods(0,nonNegString);
+                    }
+                     if ((subIndex!=0) && (subIndex2!=0) && (subIndex2 != multIndex+1)) { //1-2*3
+                         String newSolveString = solve.substring(subIndex + 1);
+                        String newMultNumber = callMethods(0,newSolveString);
+                        String newSubNumber = solve.substring(0, subIndex + 1) + newMultNumber;
+                        solvedNumber = callMethods(0,newSubNumber);
+                    }
+                    if ((subIndex!=0) && (subIndex <multIndex) && (multIndex <subIndex2)) {
+                        String newMultString = solve.substring(subIndex+1);
+                        String newMultNumber = callMethods(0,newMultString);
+                        String newSubString = solve.substring(0, subIndex) +newMultNumber;
+                        solvedNumber= callMethods(0,newSubString);
+
+                    }
+
+                }
+
+            }
+
+            if ((solve.contains("-") == true) && (solve.contains("+"))&& !solve.contains("*")) { //for sub and add
+                int addIndex = solve.indexOf("+");
+                int subIndex = solve.indexOf("-");
+                if (subIndex==0) { // if adding a negative number, switch the order of the numbers and turn it into subtraction, then recall call methods
+                    String num1= solve.substring(addIndex+1);
+                    String num2 = solve.substring(0, addIndex);
+                    String newSolve= num1+num2;
+                    solvedNumber= callMethods(0, newSolve);
+                }
+                if (addIndex < subIndex) {
+                    if (subIndex== addIndex +1 ) {
+                        String num1= solve.substring(0, addIndex);
+                        String num2 = solve.substring(addIndex+1);
+                        String newSolve= num1 + num2;
+                        solvedNumber= callMethods(0, newSolve);
+                    }
+                    else {
+                        String newSolveString = solve.substring(0, subIndex);
+                        String newAddNumber = callMethods(0, newSolveString);
+                        String newSubNumber = newAddNumber + solve.substring(subIndex);
+                        solvedNumber = callMethods(0, newSubNumber);
+                    }
+                }
+                if((addIndex > subIndex) && (subIndex != 0)){
+                    String newSolveString = solve.substring(subIndex+1);
+                    String newAddNumber = callMethods(0,newSolveString);
+                    String newSubNumber = solve.substring(0, subIndex+1) + newAddNumber;
+                    solvedNumber=callMethods(0,newSubNumber);
+                }
+
+            }
+
+            if ((solve.contains("-") == true) && (solve.contains("+")) && solve.contains("*")) { //for mult and sub and add
+                //solvedNumber=multiplyMethod(solve);
+                int addIndex = solve.lastIndexOf("+");
+                int subIndex = solve.lastIndexOf("-");
+                int multIndex = solve.indexOf("*");
+                if (addIndex < subIndex) {
+                    String newAddNumber= "";
+                    String newSubNumber= "";
+                    if ((multIndex >addIndex)&& !(multIndex >subIndex)) { // if add is first and mult is second
+                        String noSubString = solve.substring(0, subIndex); //string with addition and multiply
+                        String newMultString = solve.substring(addIndex + 1); //string with only multiply    *********
+                        String newMultNumber = callMethods(0,newMultString); // solution to multiplication
+                        String newAddString = solve.substring(0, addIndex + 1) + newMultNumber; //string with add + the multiplication solution
+                        newAddNumber = callMethods(0,newAddString); //solution to addition
+                        newSubNumber = newAddNumber + solve.substring(subIndex); //string with addition solution - subtraction number
+                    }
+
+                    if ((multIndex < addIndex) && !(multIndex >subIndex)) { // if mult is first and add is second
+                        String noSubString = solve.substring(0, subIndex); //string with addition and multiply
+                        String newMultString = noSubString.substring(0,addIndex);
+                        String newMultNumber = callMethods(0,newMultString);
+                        String newAddString = newMultNumber + noSubString.substring(addIndex);
+                        newAddNumber= callMethods(0,newAddString);
+                        newSubNumber = newAddNumber + solve.substring(subIndex); //string with addition solution - subtraction number
+                    }
+                    if ((multIndex >addIndex) && (multIndex >subIndex) && !( subIndex== multIndex+1)) {
+                        String noSubString = solve.substring(0, subIndex); //string with addition and multiply
+                        newAddNumber= callMethods(0,noSubString);
+                        String newMultString = solve.substring(subIndex+1);
+                        String newMultNumber = callMethods(0,newMultString);
+                        newSubNumber= newAddNumber + "-" + newMultNumber;
+                    }
+                    if ((multIndex > addIndex) && ( subIndex== multIndex+1)) {
+                        String newMultString= solve.substring(addIndex+1);
+                        String newMultNumber= callMethods(0, newMultString);
+                        String newAddString = solve.substring(0, addIndex +1) + newMultNumber;
+                        newSubNumber= callMethods(0, newAddString);
+                    }
+                    //String newSubNumber = newAddNumber + solve.substring(subIndex); //string with addition solution - subtraction number
+                    solvedNumber=callMethods(0,newSubNumber); //solution
+                }
+                if(addIndex > subIndex){
+                    String newSubNumber= "";
+                    String newAddNumber= "";
+                    String noAddString = solve.substring(0,addIndex);
+                    if ((multIndex > subIndex) && !(multIndex > addIndex)) { // if mult is after subtraction
+                        String newMultString = noAddString.substring(subIndex + 1);
+                        String newMultNumber = callMethods(0,newMultString);
+                        String newSubString = solve.substring(0, subIndex + 1) + newMultNumber;
+                        newSubNumber = callMethods(0,newSubString);
+                        newAddNumber= newSubNumber + solve.substring(addIndex);
+
+                    }
+                    if ((multIndex < subIndex)  && !(multIndex > addIndex)) { //if sub is after mult
+                        String newMultString = noAddString.substring(0, subIndex);
+                        String newMultNumber= callMethods(0,newMultString);
+                        String newSubString = newMultNumber + noAddString.substring(subIndex);
+                        newSubNumber= callMethods(0,newSubString);
+                        newAddNumber= newSubNumber + solve.substring(addIndex);
+
+                    }
+                    if ((multIndex >subIndex) && (multIndex > addIndex)) {
+                        newSubNumber= callMethods(0,noAddString);
+                        String newMultString= solve.substring(addIndex +1);
+                        String newMultNumber= callMethods(0,newMultString);
+                        newAddNumber= newSubNumber + "+" + newMultNumber;
+
+
+                    }
+                    solvedNumber=callMethods(0,newAddNumber);
+               }
+
+            }
+
+        }
+        return solvedNumber;
+    }
+
+
+
+
+
+
+
+    public class myLong {
+
+
+        Scanner scnr = new Scanner(System.in);
+        public ArrayList<Integer> numArray = new ArrayList<>();
+        String  cutValue;
+        int v;
+        String Long= "";
+        String enteredValue;
+
+
+        /**
+         * Constructor myLong allows the user to instantiate the object. numArray can be accessed
+         * through the constructor as well as the main array for the calculations.
+         *
+         * @param  enteredValue  String that sets the object as well as setLong
+         */
+
+
+        public myLong(String enteredValue) {
+            this.enteredValue= enteredValue;
+            this.numArray = numArray;
+        }
+
+        public myLong() {
+            this.enteredValue= enteredValue;
+            this.numArray = numArray;
+        }
+
+        /**
+         * Method makeArray is of type ArrayList<Integer> and accepts the parameter of enteredValue.
+         * This cuts the entered String into a usable ArrayList as part of a myLong object.
+         * @param  enteredValue  String input to be returned as an array
+         * @return numArray      Returns the String into a spliced Array
+         */
+
+
+        public   ArrayList<Integer> makeArray(String enteredValue) {
+            String  cutValue;
+            int v;
+
+            int i = 0;
+            int negV = -1;
+
+
+//            if (enteredValue.charAt(0) == '-') {
+//                if (enteredValue.length() > 2) {
+//                    for (i = enteredValue.length() - 1; i > 0; i--) {
+//                        cutValue = enteredValue.substring(1, 2);
+//                        v = Integer.valueOf(cutValue);
+//                        negV = negV * v;
+//                        this.numArray.add(negV);
+//                        enteredValue = enteredValue.substring(1, enteredValue.length());
+//                    }
+//                } else if (enteredValue.length() == 2) {
+//                    cutValue = enteredValue.substring(1);
+//                    v = Integer.valueOf(cutValue);
+//                    negV = negV * v;
+//                    this.numArray.add(negV);
+//
+//                }
+//            } else {
+                for (i = enteredValue.length(); i > 0; i--) {
+                    if (enteredValue.length() > 1) {
+                        cutValue = enteredValue.substring(0, 1);
+                        v = Integer.valueOf(cutValue);
+                        this.numArray.add(v);
+                        enteredValue = enteredValue.substring(1, (enteredValue.length()));
+                    } else if (enteredValue.length() == 1) {
+                        v = Integer.valueOf(enteredValue);
+                        this.numArray.add(v);
+                        enteredValue = enteredValue.substring(0, 0);
+                    }
+                }
+           // }
+            return numArray;
+        }
+
+        /**
+         * Method setLong accepts a String and calls on makeArray to splice the String
+         * into an ArrayList. The ArrayList is cleared before each use.
+         * This cuts the entered String into a usable ArrayList as part of a myLong object.
+         * @param  enteredValue  String input to be returned as an array
+         * @return void          null
+         */
+
+
+        public void setLong (String enteredValue) {
+            numArray.clear();
+            numArray= this.makeArray(enteredValue);
+        }
+
+        /**
+         * Method toString is of type String and accepts the parameter of an integer
+         * ArrayList. toString uses a for-loop to turn a finished array post-calculation
+         * back into a String for readability and efficiency.
+         //* @param  numArray      ArrayList input to be turned back into a String
+         * @return Long          Returns the String version of the ArrayList
+         */
+        @Override
+        public String toString() {
+            ArrayList<Integer> longArray = this.numArray;
+            String Long = "";
+            for (int i=0; i < longArray.size(); i++) {
+                Long= Long + Integer.toString(numArray.get(i));
+            }
+            return Long;
+        }
+
+        /**
+         * Method getLong is of type String.
+         * getLong is a getter whose function is to return the String of numArray
+         * using method toString.
+         * @return Long          Returns the String version of the ArrayList
+         */
+
+        public String getLong() {
+            this.numArray=numArray;
+            Long= this.toString();
+            return Long;
+        }
+
+        /**
+         * Method add is of type ArrayList<Integer> and accepts the parameter of a myLong object
+         * Method add takes two myLong objects and adds them using for-loops matching the respective
+         * size of each ArrayList.
+         * @param  other         myLong object
+         * @return numArray      Returns finished, added Array of long1 and long2.
+         */
+
+        public   ArrayList<Integer> add(myLong other) {
+            ArrayList<Integer> long2 = other.numArray;
+            ArrayList<Integer> long1= this.numArray;
+
+            int l1 = long1.size();
+            int l2 = long2.size();
+            ArrayList<Integer> addArray = new ArrayList<>();
+            int add;
+            int size1 = l1 - 1;
+            int size2 = l2 - 1;
+            int a2 = 0;
+            int a1;
+            if (size1 == size2) {
+                for (int i = size1; i >= 0; i--) {
+                    int x = long1.get(i) + a2;
+                    int y = long2.get(i);
+                    add = (x + y);
+                    if (add >= 10) {
+                        a2 = add / 10;
+                        a1 = add - (a2 * 10);
+                        if (i==0) {
+                            addArray.add(a1);
+                            addArray.add(a2);
+                        }
+                        else {
+                            addArray.add(a1);
+
+                        }
+
+                    } else {
+                        addArray.add(add);
+                        a2 = 0;
+                    }
+
+                }
+                Collections.reverse(addArray);
+            }
+            else if (size1 > size2) {
+                int dif = (size1 - size2);
+                if (size2 == 0) {
+                    add = (long1.get(size1) + long2.get(size2));
+                    if (add >= 10) {
+                        a2 = add / 10;
+                        a1 = add - (10 * a2);
+                        addArray.add(((long1.get(size1 - 1) + a2)));
+                        addArray.add(a1);
+                        for (int i = 0; i <= (dif - 2); i++) {
+                            addArray.add(i, long1.get(i));
+                        }
+                    } else {
+                        addArray.add(add);
+                        for (int i = 0; i <= (dif - 1); i++) {
+                            addArray.add(i, long1.get(i));
+                        }
+                    }
+
+                } else {
+                    int j = 0;
+                    a2 = 0;
+                    a1 = 0;
+                    for (int i = size2; i >= 0; i--) {
+                        add = (long1.get(size1 - j) + long2.get(i) + a2);
+                        if (add >= 10) {
+                            a2 = add / 10;
+                            a1 = add - (a2 * 10);
+                            addArray.add(a1);
+
+                        } else {
+                            addArray.add(add);
+                            a2 = 0;
+
+                        }
+
+                        j += 1;
+                    }
+                    for (int i = (dif-1); i >=0; i--) {
+                        int x= (long1.get(i)+a2);
+                        addArray.add(x);
+
+                        if ((long1.get(i)+a2)>=10) {
+                            a2=x/10;
+                            a1= x- (a2*10);
+                            addArray.add(a1);
+                        }
+                        else {
+                            a2=0;
+                        }
+                    }
+                    Collections.reverse(addArray);
+
+
+                }
+            } else if (size2 > size1) {
+                int dif = (size2 - size1);
+                if (size1 == 0) {
+                    add = (long1.get(size1) + long2.get(size2));
+                    if (add >= 10) {
+                        a2 = add / 10;
+                        a1 = add - (10 * a2);
+                        addArray.add(((long2.get(size2 - 1) + a2)));
+                        addArray.add(a1);
+                        for (int i = 0; i <= (dif - 2); i++) {
+                            addArray.add(i, long2.get(i));
+                        }
+                    }
+                    else {
+                        addArray.add(add);
+                        for (int i = 0; i <= (dif - 1); i++) {
+                            addArray.add(i, long2.get(i));
+                        }
+                    }
+
+                }
+                else {
+                    int j = 0;
+                    a2 = 0;
+                    a1 = 0;
+                    for (int i = size1; i >= 0; i--) {
+                        add = (long2.get(size2 - j) + long1.get(i) + a2);
+                        if (add >= 10) {
+                            a2 = add / 10;
+                            a1 = add - (a2 * 10);
+                            addArray.add(a1);
+                        } else {
+                            addArray.add(add);
+                            a2 = 0;
+
+                        }
+
+                        j += 1;
+                    }
+                    for (int i =(dif-1); i >=0; i--) {
+
+                        int x= (long2.get(i)+a2);
+                        if ((long2.get(i)+a2)>=10) {
+                            a2=x/10;
+                            a1= x- (a2*10);
+                            addArray.add(a1);
+                        }
+                        else {
+                            addArray.add(x);
+                            a2=0;
+
+                        }
+                    }
+
+
+                    Collections.reverse(addArray);
+
+
+
+                }
+
+            }
+
+            return addArray;
+        }
+
+
+        /**
+         * Method multAdd is of type ArrayList<Integer> and accepts the parameter of two ArrayLists.
+         * Method multAdd takes two ArrayLists and adds them using for-loops matching the respective
+         * size of each ArrayList. The purpose of multAdd is a carefully designed alternative to add to solely
+         * be used in the multiply function. It is essentially an overloaded add function with a different name.
+         // * @param  ArrayList<Integer>       Integer ArrayList
+         //* @param  ArrayList<Integer>       Integer ArrayList
+         * @return addArray      Returns finished, added Array of long1 and long2 to be used in multiply.
+         */
+
+        public   ArrayList<Integer> multAdd(ArrayList<Integer> long1, ArrayList<Integer> long2) {
+            int l1 = long1.size();
+            int l2 = long2.size();
+            ArrayList<Integer> addArray = new ArrayList<>();
+            int add;
+            int size1 = l1 - 1;
+            int size2 = l2 - 1;
+            int a2 = 0;
+            int a1;
+            if (size1 == size2) {
+                for (int i = size1; i >= 0; i--) {
+                    int x = long1.get(i) + a2;
+                    int y = long2.get(i);
+                    add = (x + y);
+                    if (add >= 10) {
+                        a2 = add / 10;
+                        a1 = add - (a2 * 10);
+                        if (i==0) {
+                            addArray.add(a1);
+                            addArray.add(a2);
+                        }
+                        else {
+                            addArray.add(a1);
+
+                        }
+
+                    } else {
+                        addArray.add(add);
+                        a2 = 0;
+                    }
+
+                }
+                Collections.reverse(addArray);
+            }
+            else if (size1 > size2) {
+                int dif = (size1 - size2);
+                if (size2 == 0) {
+                    add = (long1.get(size1) + long2.get(size2));
+                    if (add >= 10) {
+                        a2 = add / 10;
+                        a1 = add - (10 * a2);
+                        addArray.add(((long1.get(size1 - 1) + a2)));
+                        addArray.add(a1);
+                        for (int i = 0; i <= (dif - 2); i++) {
+                            addArray.add(i, long1.get(i));
+                        }
+                    } else {
+                        addArray.add(add);
+                        for (int i = 0; i <= (dif - 1); i++) {
+                            addArray.add(i, long1.get(i));
+                        }
+                    }
+
+                } else {
+                    int j = 0;
+                    a2 = 0;
+                    a1 = 0;
+                    for (int i = size2; i >= 0; i--) {
+                        add = (long1.get(size1 - j) + long2.get(i) + a2);
+                        if (add >= 10) {
+                            a2 = add / 10;
+                            a1 = add - (a2 * 10);
+                            addArray.add(a1);
+
+                        } else {
+                            addArray.add(add);
+                            a2 = 0;
+
+                        }
+
+                        j += 1;
+                    }
+                    for (int i = (dif-1); i >=0; i--) {
+                        int x= (long1.get(i)+a2);
+                        addArray.add(x);
+
+                        if ((long1.get(i)+a2)>=10) {
+                            a2=x/10;
+                            a1= x- (a2*10);
+                            addArray.add(a1);
+                        }
+                        else {
+                            a2=0;
+                        }
+                    }
+                    Collections.reverse(addArray);
+
+
+                }
+            } else if (size2 > size1) {
+                int dif = (size2 - size1);
+                if (size1 == 0) {
+                    add = (long1.get(size1) + long2.get(size2));
+                    if (add >= 10) {
+                        a2 = add / 10;
+                        a1 = add - (10 * a2);
+                        addArray.add(((long2.get(size2 - 1) + a2)));
+                        addArray.add(a1);
+                        for (int i = 0; i <= (dif - 2); i++) {
+                            addArray.add(i, long2.get(i));
+                        }
+                    }
+                    else {
+                        addArray.add(add);
+                        for (int i = 0; i <= (dif - 1); i++) {
+                            addArray.add(i, long2.get(i));
+                        }
+                    }
+
+                }
+                else {
+                    int j = 0;
+                    a2 = 0;
+                    a1 = 0;
+                    for (int i = size1; i >= 0; i--) {
+                        add = (long2.get(size2 - j) + long1.get(i) + a2);
+                        if (add >= 10) {
+                            a2 = add / 10;
+                            a1 = add - (a2 * 10);
+                            addArray.add(a1);
+                        } else {
+                            addArray.add(add);
+                            a2 = 0;
+
+                        }
+
+                        j += 1;
+                    }
+                    for (int i =(dif-1); i >=0; i--) {
+
+                        int x= (long2.get(i)+a2);
+                        if ((long2.get(i)+a2)>=10) {
+                            a2=x/10;
+                            a1= x- (a2*10);
+                            addArray.add(a1);
+                        }
+                        else {
+                            addArray.add(x);
+                            a2=0;
+
+                        }
+                    }
+
+
+                    Collections.reverse(addArray);
+
+
+                }
+            }
+            return addArray;
+        }
+
+        /**
+         * Method multiply is of type ArrayList<Integer> and accepts the parameter of a myLong object.
+         * Method multiply takes two ArrayLists and multiplies them using for-loops matching the respective
+         * size of each ArrayList. This function calls on the previous multAdd function to add each multiplied
+         * ArrayList after their execution.
+         * @param other       myLong object
+         * @return totalSum   Returns finished, multiplied Array of each added ArrayList.
+         */
+
+        public ArrayList <Integer>  multiply(myLong other) {
+            ArrayList<Integer> long2= other.numArray;
+            ArrayList<Integer> long1= this.numArray;
+            int l1 = long1.size();
+            int l2 = long2.size();
+            int size1 = l1 - 1;
+            int size2 = l2 - 1;
+            int multiplyNum;
+
+
+            String multiplyString;
+            ArrayList<ArrayList<Integer>> A = new ArrayList<>();
+            Collections.reverse(long1);
+            Collections.reverse(long2);
+            //myLong fL= new myLong();
+            ArrayList<Integer> finalArray = new ArrayList<>();
+
+
+
+            if (size1 <size2) {
+                for (int i = 0; i <= size2; i++) {
+                    for (int j = 0; j <= size1; j++) {
+                        //get value at positions
+                        int x = long1.get(j);
+                        int y = long2.get(i);
+                        int num = (x * y);
+                        int numZeros = i + j;
+                        String zeros = "";
+                        for (int l = 0; l < numZeros; l++) {
+                            zeros += "0";
+                        }
+
+                        multiplyString = Integer.toString(num) + zeros;
+
+                        myLong fL = new myLong(multiplyString);
+                        finalArray = fL.makeArray(multiplyString);
+                        A.add(finalArray);
+                    }
+                }
+            }
+
+            if (size2 <size1) {
+                for (int i = 0; i <= size1; i++) {
+                    for (int j = 0; j <= size2; j++) {
+                        //get value at positions
+                        int x = long1.get(i);
+                        int y = long2.get(j);
+                        int num = (x * y);
+                        int numZeros= i +j;
+                        String zeros = "";
+                        for (int l = 0; l < numZeros ; l++) {
+                            zeros += "0";
+                        }
+
+                        multiplyString = Integer.toString(num) + zeros;
+
+
+                        myLong fL = new myLong(multiplyString);
+                        finalArray = fL.makeArray(multiplyString);
+                        A.add(finalArray);
+                    }
+                }
+            }
+            if (size1==size2) {
+                for (int i = 0; i <= size1; i++) {
+                    for (int j = 0; j <= size2; j++) {
+                        //get value at positions
+                        int x = long1.get(i);
+                        int y = long2.get(j);
+                        int num = (x * y);
+                        int numZeros= i +j;
+                        String zeros = "";
+                        for (int l = 0; l < numZeros ; l++) {
+                            zeros += "0";
+                        }
+
+                        multiplyString = Integer.toString(num) + zeros;
+
+
+                        myLong fL = new myLong(multiplyString);
+                        finalArray = fL.makeArray(multiplyString);
+                        A.add(finalArray);
+                    }
+                }
+            }
+            ArrayList <Integer> totalSum= new ArrayList<>();
+            ArrayList <Integer> currSum= new ArrayList<>();
+
+            for (int i=1; i<= (A.size()-1); i+=2) {
+                currSum = this.multAdd((A.get(i-1)), A.get(i));
+                totalSum = this.multAdd(currSum, totalSum);
+
+            }
+            if(((A.size()-1)%2==0)) {
+                currSum = A.get(A.size() - 1);
+                totalSum = this.multAdd(currSum, totalSum);
+            }
+
+            Collections.reverse(long1);
+            Collections.reverse(long2);
+
+
+            return totalSum;
+
+        }
+
+
+
+
+
+        /**
+         * Method subtract is of type ArrayList<Integer> and accepts the parameter of a myLong object.
+         * Method subtract takes two ArrayLists, reverses them using the Collections interface,
+         * and subtracts them using for-loops indexing through each Array.
+         * @param  other              myLong object
+         * @return subtractArray      Returns finished, subtracted Array of long1 and long2.
+         */
+        public  ArrayList<Integer> subtract(myLong other) {
+            ArrayList<Integer> long2 = other.numArray;
+            ArrayList<Integer> long1= this.numArray;
+            ArrayList<Integer> temp1= new ArrayList<>();
+            ArrayList <Integer> temp2= new ArrayList<>();
+            //ArrayList<Integer> tempLong2 = new ArrayList<>();
+            //ArrayList<Integer> tempLong1= new ArrayList<>();
+            for (int i=0; i < long1.size(); i++ ) {
+                temp1.add(long1.get(i));
+            }
+            for (int i=0; i <long2.size(); i++) {
+                temp2.add(long2.get(i));
+            }
+
+            ArrayList<Integer> subtractArray = new ArrayList<>();
+            ArrayList<Integer> temp= new ArrayList<>();
+            int switchBack= 0;
+            int initLength = long1.size()-long2.size();
+            if (temp2.size()-temp1.size() <0) {
+                temp=temp1;
+                temp1=temp2;
+                temp2=temp;
+            }
+            if (long2.size() == long1.size()) {
+                if (temp2.get(0)- temp1.get(0) <0) {
+                    temp=temp1;
+                    temp1=temp2;
+                    temp2=temp;
+                    switchBack=1;
+                }
+            }
+
+
+
+            if(temp2.size() > temp1.size()){
+                int diff = temp2.size() - temp1.size();
+                for(int i=0; i < diff; i++){
+                    temp1.add(0,0);
+                }
+            }
+            else {
+                int diff = temp1.size() - temp2.size();
+                for(int i=0; i < diff; i++){
+                    temp2.add(0,0);
+                }
+            }
+
+            Collections.reverse(temp1);
+            Collections.reverse(temp2);
+
+
+
+            if(temp1.size() !=1 && temp2.size()!=1) {
+                for (int k = 0; k < temp2.size(); k++) {
+                    int i = k;
+                    int j = k;
+                    if ((temp2.get(i) - temp1.get(j)) < 0) {
+                        i++;
+                        while (i > j) {
+                            if (temp2.get(i) > 0) {
+                                temp2.set(i, (temp2.get(i) - 1));
+                                temp2.set(i - 1, (temp2.get(i - 1) + 10));
+                                i--;
+                            } else {
+                                i++;
+                            }
+                        }
+                    }
+                    if (temp2.get(i) - temp1.get(j) >= 0) {
+                        int x = (temp2.get(i) - temp1.get(j));
+                        subtractArray.add(x);
+
+                    }
+                }
+            }
+            if (temp1.size() ==1 && temp2.size()==1) {
+                int x= temp2.get(0) - temp1.get(0);
+                subtractArray.add(x);
+            }
+            Collections.reverse(subtractArray);
+            if (initLength < 0) {
+                if (subtractArray.get(0)== 0) {
+                    subtractArray.remove(0);
+                }
+                subtractArray.set(0, (subtractArray.get(0) * (-1)));
+            }
+            Collections.reverse(temp1);
+            Collections.reverse(temp2);
+
+            if (switchBack==1) {
+                temp=temp1;
+                temp1=temp2;
+                temp2=temp;
+            }
+
+
+
+
+            if ((initLength==0) && (long1.get(0) < long2.get(0))) {
+
+                if (subtractArray.get(0)== 0) {
+                    subtractArray.remove(0);
+                }
+                subtractArray.set(0,(subtractArray.get(0)*(-1)));
+            }
+
+            return subtractArray;
+        }
+
+
+
+        /**
+         * A previewed example of our main method delineates the programs intended execution. The user inputs two
+         * different Integers which are stored as Strings. Two myLong objects are created using the Strings as a parameter.
+         * The objects then call the setLong method to input the String, and three different examples of each of add, subtract,
+         * and multiply are called which are then output into the console.
+         * @param  args          String Array
+         * @return void          null
+         */
+
+    }
+
+
+
+    public int isValidInput(String display) {
+
+        int valid = 0;
+        displayArray.clear();
+
+        for (int i = 0; i < display.length(); i++) {
+            displayArray.add(display.charAt(i));
+        }
+        if (displayArray.get(0)== '*') {
+            jtfResult.setText("Invalid Input (Press C to clear)");; // multiply and multiply
+            valid = 1;
+        }
+        if (displayArray.get(0)== '+') {
+            jtfResult.setText("Invalid Input (Press C to clear)");; // multiply and multiply
+            valid = 1;
+        }
+
+        for (int i = 0; i < displayArray.size(); i++) {
+            if ((displayArray.get(i) == '*') && (displayArray.get(i + 1) == '*')) {
+                jtfResult.setText("Invalid Input (Press C to clear)");; // multiply and multiply
+                valid = 1;
+            }
+            if ((displayArray.get(i) == '+') && (displayArray.get(i + 1) == '+')) {
+                jtfResult.setText("Invalid Input (Press C to clear)");//add and add
+                valid = 1;
+            }
+            if ((displayArray.get(i) == '-') && (displayArray.get(i + 1) == '-')) {
+                jtfResult.setText("Invalid Input (Press C to clear)");  //sub and sub
+                valid = 1;
+            }
+            if ((displayArray.get(i) == '*') && (displayArray.get(i + 1) == '+')) {
+                jtfResult.setText("Invalid Input (Press C to clear)");  //multiply and add
+                valid = 1;
+            }
+            if ((displayArray.get(i) == '-') && (displayArray.get(i + 1) == '+')) {
+                jtfResult.setText("Invalid Input (Press C to clear)");  //add and subtract
+                valid = 1;
+            }
+            if ((displayArray.get(i) == '+') && (displayArray.get(i + 1) == '*')) {
+                jtfResult.setText("Invalid InpuT (Press C to clear)");  //add and multiply
+                valid = 1;
+            }
+
+            if ((displayArray.get(i) == '-') && (displayArray.get(i + 1) == '+')) {
+                jtfResult.setText("Invalid Input (Press C to clear)"); //subtract and add
+                valid = 1;
+            }
+
+            if ((displayArray.get(i)== '(') && (displayArray.get(i+1)==')')) {
+                jtfResult.setText("Invalid Input (Press C to clear)");
+                valid=1;
+            }
+
+        }
+
+        if (par1Counter != par2Counter) {
+            jtfResult.setText("Invalid Input (Press C to clear)");
+            valid = 1;
+        }
+
+        if(valid == 0){
+            jtfResult.setText("Valid Input (Press C to clear)");
+        }
+
+
+        return valid;
+
+    }
+    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+        calc.pack();
+        calc.setLocationRelativeTo(null);
+        calc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        calc.setVisible(true);
+    }
+}
+
+
+
+
+
+
