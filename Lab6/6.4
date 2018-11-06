@@ -1,0 +1,88 @@
+//
+//  main.c
+//  Lab6.6
+//
+//  Created by Christina Campbell on 11/5/18.
+//  Copyright © 2018 Christina Campbell. All rights reserved.
+//
+
+#include <stdio.h>
+//Warmup:
+////void swap(int x, int y)
+////{
+////    int temp;
+////    temp = x;
+////    x = y;
+////    y = temp;
+////    return;
+////}
+//void swap(int *x, int *y)
+//{
+//    int temp;
+//    temp = *x;
+//    *x = *y;
+//    *y = temp;
+//    return;
+//}
+//int main(void) {
+//    int x= 10;
+//    int y = 1;
+//    swap(&x,&y);
+//    printf("%d\n",x);
+//    printf("%d\n",y);
+//}
+
+// The first swap(int x, int y) method does not actually swap the values of x and y, because it takes in the data of x and y, not their locations in memory. The second swap (int *x, int *y) takes in their pointers which points to their location memory, so their values stored in these locations in the memory are actually swapped.
+
+
+
+//Linked List:
+//create the struct distance that has attributes feet and inches
+struct distance {
+    int feet;
+    float inches;
+    
+}distance;
+//create a method addDistance take two struct ditance as parameters, and adds them together
+//returns a distances struct
+struct distance addDistance (struct distance D1, struct distance D2) {
+    struct distance sum;
+    //add the feet together
+    int sumFeet= (D1.feet) + (D2.feet);
+    // add the inches together
+    float sumInches= D1.inches +D2.inches;
+    //if the sum of the inches is larger than 12, subtract 12 from the sum of minutes and add 1 to the sum of the feet
+    while (sumInches >= 12) {
+        sumInches -=12;
+        ++sumFeet;
+    }
+    sum.feet = sumFeet;
+    sum.inches = sumInches;
+    return sum;
+}
+int main(void)
+{
+    struct distance D1;
+    struct distance D2;
+    printf("1st Distance\n");
+    printf("Enter feet: ");
+    scanf("%d", &D1.feet);
+    printf("\nEnter inches: ");
+    scanf("%f", &D1.inches);
+    printf("\n2nd Distance\n");
+    printf("Enter feet: ");
+    scanf("%d", &D2.feet);
+    printf("\nEnter inches: ");
+    scanf("%f", &D2.inches);
+
+    struct distance sum= addDistance(D1,D2);
+    printf("Sum of distances: = ");
+    printf("%d\'-", sum.feet);
+    printf("%.2f\"\n",sum.inches);
+
+
+
+
+    return 0;
+}
+
