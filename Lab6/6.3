@@ -1,0 +1,133 @@
+//
+//  main.c
+//  Lab6.5
+//
+//  Created by Christina Campbell on 11/5/18.
+//  Copyright © 2018 Christina Campbell. All rights reserved.
+//Partner: Sam Eigen
+//Warmup:
+////void swap(int x, int y)
+////{
+////    int temp;
+////    temp = x;
+////    x = y;
+////    y = temp;
+////    return;
+////}
+//void swap(int *x, int *y)
+//{
+//    int temp;
+//    temp = *x;
+//    *x = *y;
+//    *y = temp;
+//    return;
+//}
+//int main(void) {
+//    int x= 10;
+//    int y = 1;
+//    swap(&x,&y);
+//    printf("%d\n",x);
+//    printf("%d\n",y);
+//}
+
+// The first swap(int x, int y) method does not actually swap the values of x and y, because it takes in the data of x and y, not their locations in memory. The second swap (int *x, int *y) takes in their pointers which points to their location memory, so their values stored in these locations in the memory are actually swapped.
+
+
+
+//Linked List:
+#include <stdio.h>
+#include<stdlib.h>
+// creates the typedef Nodes, with the attributes of a next node and an integer data
+typedef struct Node
+{
+    int data;
+    struct Node *next;
+}Node;
+
+//prints the data of the nodes in a linked list starting from
+// the given node
+void printList(struct Node *n)
+{
+    while (n != NULL)
+    {
+        printf(" %d ", n->data);
+        n = n->next;
+    }
+}
+//adds a node to the front of the linked list
+//takes in a pointer of a pointer Node and the data the Node will hold
+void addNode(Node** head, int data){
+    //allocate space in the memory for the new Node
+    Node* newNode = (Node *)malloc(sizeof(Node));
+    //assign the new Node to the data
+    newNode->data = data;
+    //if there is no head (linked list is empty), then link the new Node to NULL
+    // assign the head pointer to the new Node
+    if(!(*head)){
+        newNode->next = NULL;
+        (*head) = newNode;
+    }else{
+        //if the list is not empty, link the new Node to the previous head
+        // assign the head pointer to the new Node
+        newNode->next = (*head);
+        (*head) = newNode;
+    }
+    return;
+}
+//removes the head of the linked list
+//takes in a pointer of a pointer Node and the data that will be removed
+void removeHead(Node** head, int remove){
+    Node* temp = NULL;
+    Node* curr= (*head);
+    if((*head)->data == remove){
+        (*head) = (*head)->next;
+    }else{
+        while(curr){
+            if(curr->data == remove){
+                temp= curr->next;
+                curr->next = NULL;
+                curr = temp;
+            }
+            curr = curr->next;
+        }
+    }
+    free(*head);
+    return;
+}
+int main(void)
+{
+    struct Node* head = NULL;
+    struct Node* curr = NULL;
+    struct Node* tail = NULL;
+    
+    // allocate 3 nodes in the heap
+    head = (struct Node*)malloc(sizeof(struct Node));
+    curr = (struct Node*)malloc(sizeof(struct Node));
+    tail = (struct Node*)malloc(sizeof(struct Node));
+    
+    head->data = 1; //assign data to head node
+    head->next = tail; // Link first node to the next node
+    
+    tail->data = 2; //assign data to a second node
+    tail->next = NULL; // links the tail to NULL
+    
+    
+// prints the data of the nodes in the linked list
+    printList(head);
+    printf("\n");
+    //adds nodes to the front of the list
+    addNode(&head, 4);
+    addNode(&head,5);
+    //prints the data of the nodes in the new linked list
+    printList(head);
+    printf("\n");
+    //removes the first node in the linked list
+    removeHead(&head,5);
+    //prints the data of the nodes in the new linked list
+    printList(head);
+    
+    
+    
+    return 0;
+}
+
