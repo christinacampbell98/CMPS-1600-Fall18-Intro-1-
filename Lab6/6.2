@@ -1,0 +1,89 @@
+//
+//  main.c
+//  Lab6.3
+//
+//  Created by Christina Campbell on 11/5/18.
+//  Copyright © 2018 Christina Campbell. All rights reserved.
+//Partner: Sam Eigen
+
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_STRING_LENGTH 100
+
+
+int guessCounter=0;
+//generates a random number to be used in the program, inbetween -100 and 100
+int get_random(int rangemin, int rangemax){
+    
+    int c = rangemin + arc4random() % ((rangemax - rangemin+1)+1);
+    return c;
+}
+//Asks the user to enter an integer, and makes sure that it is within the range
+int ask_in_range(int min, int max){
+    int testInteger;
+    printf("Please enter a number: ");
+    scanf("%d",&testInteger);
+    while(testInteger < min || testInteger > max){
+        printf("Your number is outside of [-100, 100] range. Please enter a number: ");
+        scanf("%d",&testInteger);
+    }
+    return testInteger;
+}
+// Has the user guess numbers between -100 and 100 until the proper number is guessed
+// the guesscounter is increased each time the wrong number is entered
+// the final guess count and the users name is written to the file to be saved as the player history
+int guessinggame(int num, int rangemin, int rangemax){
+    
+    int guess;
+    char c[1000];
+    
+    FILE* fp;
+    fp = fopen("/Users/christinacampbell/Documents/history.txt", "r");
+    
+    printf("Hello and welcome to the game.\n");
+    printf("You need to guess a number between -100 and 100.\n");
+    
+    guess = ask_in_range(rangemin,rangemax);
+    
+    while(guess != num){
+        if(guess>num){
+            printf("Too high!\n");
+            guessCounter++;
+            guess = ask_in_range(rangemin,rangemax);
+        }else{
+            printf("Too low!\n");
+            guessCounter++;
+            guess = ask_in_range(rangemin,rangemax);
+        }
+    }
+    
+    printf("Good job! You took %d guesses\n", guessCounter);
+    
+     fscanf(fp,"%s", c);
+    printf("Recent score:\n%s\n", c);
+    fclose(fp);
+    
+    
+    return num;
+}
+
+int main(void) {
+    int min=-100;
+    int max=100;
+    int randomInt = get_random(min,max);
+    char name[MAX_STRING_LENGTH];
+    
+    
+    printf("Please enter your name: \n");
+    scanf("%s", name);
+    
+    
+    guessinggame(randomInt,min,max);
+    FILE *fp;
+    fp = fopen("/Users/christinacampbell/Documents/history.txt", "w");
+    fprintf(fp, "%s", name);
+    fprintf(fp, "%d\n", guessCounter);
+    
+    fclose(fp);
+    
+}
