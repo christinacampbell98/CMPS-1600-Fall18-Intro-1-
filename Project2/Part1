@@ -1,0 +1,434 @@
+//
+//  main.c
+//  Project1
+//
+//  Created by Christina Campbell on 11/8/18.
+//  Copyright © 2018 Christina Campbell. All rights reserved.
+//Partner: Sam Eigen
+//We talked to Andrea about our code stopping working on XCode, but it still worked on the Compiler (specifically with the edit method)
+
+#include <stdio.h>
+#include <string.h>
+
+
+//creates the person with all the info
+typedef struct Person {
+    char email [50];
+    char firstName [20];
+    char lastName[20];
+    int age;
+    char homeTown[30];
+    char hobby[30];
+} member;
+
+// like in the last lab, Person is our data, and *next is the pointer to the next person
+typedef struct Node {
+    struct Person person;
+    struct Node *next;
+    struct cNode *friendship;
+} personList;
+typedef struct cNode {
+    struct Node *friend_one;
+    struct Node *friend_two;
+    struct cNode *next;
+}connection;
+struct Node* head;
+struct cNode* connectionHead;
+
+
+
+//prints the first name of each person added
+void printList(struct Node *n)
+{
+    while (n != NULL)
+    {
+        printf(" person list:%s\n ", n->person.firstName);
+        n = n->next;
+    }
+}
+//prints the first names of each pair of connections
+void printConnection(struct cNode *n)
+{
+    while (n != NULL)
+    {
+        printf(" connection1: %s \n", n->friend_one->person.firstName);
+        printf(" connection2: %s ", n->friend_two->person.firstName);
+        
+        n = n->next;
+    }
+}
+//checks if the email already exists
+int findEmail(char *email) {
+    personList* curr = (  personList* )malloc(sizeof( personList));
+    curr = head;
+    int emailFound= 0;
+    while ( curr!=NULL) {
+        if (strcmp(curr->person.email, email)==0) {
+            emailFound=1;
+            
+            break;
+        }
+        else {
+            curr = curr -> next;
+        }
+    }
+    return emailFound;
+}
+
+
+//adds a new person to the Person Linked List
+void addPersonList(struct Person person) {
+    personList* newPerson =malloc(sizeof( personList));
+    //assign the new Node to the data
+    newPerson->person= person;
+    //if there is no head (linked list is empty), then link the new Node to NULL
+    // assign the head pointer to the new Node
+    if(!head){
+        newPerson->next = NULL;
+        head = newPerson;
+    }else{
+        //if the list is not empty, link the new Node to the previous head
+        // assign the head pointer to the new Node
+        newPerson->next = head;
+        head = newPerson;
+    }
+    //printList(head);
+}
+// this fills in all the information needed for each person, and then calls addPersonList to add them to the person linked list
+struct Person add(char* email) {
+    member * newPerson=malloc(sizeof(struct Person));
+    strcpy(newPerson->email, email);
+    printf("What is your first name? ");
+    scanf("%s", newPerson->firstName);
+    printf("What is your last name? ");
+    scanf("%s", newPerson->lastName);
+    printf("How old are you? ");
+    scanf("%d", &newPerson->age);
+    printf("What is your hometown? ");
+    scanf("%s", newPerson->homeTown);
+    printf("What is your favorite hobby? ");
+    scanf("%s", newPerson->hobby);
+    printf("\nNew Person added!\n");
+    return *newPerson;
+}
+// finds the location of the node containing the desired email in the linked list
+personList findNode(char* email) {
+    personList* curr = (  personList* )malloc(sizeof( personList));
+    curr = head;
+    int notFound= 0;
+    while ( curr!=NULL) {
+        if (strcmp(curr->person.email, email)==0) {
+            notFound=1;
+            
+            break;
+        }
+        else {
+            curr = curr -> next;
+        }
+    }
+    return *curr;
+}
+// determines if the connection exists in the connections linked list
+int findCNode(personList* remove) {
+    connection* curr = (  connection* )malloc(sizeof( connection));
+    curr = connectionHead;
+    int Found= 0;
+    while ( curr!=NULL) {
+        if ((strcmp(curr->friend_one->person.email, remove->person.email)==0)||(strcmp(curr->friend_two->person.email, remove->person.email)==0)) {
+            Found=1;
+            break;
+        }
+        else {
+            curr = curr -> next;
+        }
+    }
+    return Found;
+}
+// checks to see if a connection already exists among the 2 emails
+int cExists(char email1[], char email2[]) {
+    connection* curr = (  connection* )malloc(sizeof( connection));
+    curr = connectionHead;
+    int connectionExists= 0;
+    while ( curr!=NULL) {
+        if (((strcmp(curr->friend_one->person.email, email1)==0)&&(strcmp(curr->friend_two->person.email, email2)==0)) || ((strcmp(curr->friend_two->person.email, email1)==0)&&(strcmp(curr->friend_one->person.email, email2)==0)))  {
+            connectionExists=1;
+            break;
+        }
+        else {
+            curr = curr -> next;
+        }
+    }
+    return connectionExists;
+}
+//removes the connection nodes containing a user that is being removed
+void removeConnection(personList* removePerson) {
+    struct cNode* temp = (struct cNode*)malloc(sizeof(struct cNode));
+    struct cNode* prev = (struct cNode*)malloc(sizeof(struct cNode));
+    int connectionFound;
+    connectionFound = findCNode(removePerson);
+    if (connectionFound== 0) {
+        return;
+    }
+    *temp = *connectionHead;
+    if ((strcmp(temp->friend_one->person.email, removePerson->person.email)==0) || (strcmp(temp->friend_two->person.email, removePerson->person.email)==0)) {
+        if (temp->next== NULL) {
+            connectionHead= NULL;
+        }
+        else {
+            *connectionHead = *temp ->next;
+        }
+    }
+    else {
+        while ((strcmp(temp->friend_one->person.email, removePerson->person.email)!=0) && (strcmp(temp->friend_two->person.email, removePerson->person.email)!=0)) {
+            *prev = *temp;
+            *temp = *temp -> next;
+        }
+        if ((temp-> next) ==NULL) {
+            prev -> next = temp -> next;
+        }
+        else {
+            *prev ->next = *temp -> next;
+        }
+        
+    }
+    removeConnection(removePerson);
+}
+//removes the user from both the person linked list and the connections linked list
+void delete(char* email){
+    struct Node* found = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* prev = (struct Node*)malloc(sizeof(struct Node));
+    int emailFound;
+    emailFound= findEmail(email);
+    if (emailFound==0) {
+        printf("\nThis email is not registered.");
+        return;
+    }
+    *found= findNode(email);
+    removeConnection(found);
+    *temp = *head;
+    if((temp != NULL) && strcmp(temp->person.email, found->person.email)==0){
+        if (temp->next == NULL) {
+            head = NULL;
+            return;
+        }
+        else {
+            *head = *temp ->next;
+            return;
+        }
+    }
+    while ((strcmp(temp->person.email, found->person.email)!=0)) {
+        *prev = *temp;
+        *temp = *temp -> next;
+    }
+    if ((temp-> next) ==NULL) {
+        prev->next = NULL;
+        return;
+    }
+    else {
+        *prev ->next = *temp -> next;
+    }
+    printf("The user has been deleted!");
+}
+//edits the information of an existing linked list
+void edit(char* email){
+    struct Node* found = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* curr = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* prev = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* replaceFound = (struct Node*)malloc(sizeof(struct Node));
+    char selection[20];
+    char firstName[50];
+    member* editPerson =malloc(sizeof(member));
+    int emailFound;
+    emailFound= findEmail(email);
+    if (emailFound==0) {
+        printf("\nThis email is not registered.");
+        return;
+    }
+    *found = findNode(email);
+    *editPerson = found->person;
+    if (found == NULL) {
+        printf("\nThis email is not registered.");
+        return;
+    }
+    printf("What would you like to edit? Please enter one of the following(must enter exactly):\nemail\nfirstName\nlastName\nage\nhometown\nhobby\n");
+    scanf("%s",selection);
+    if (strcmp(selection, "email")==0) {
+        printf("Please enter the new email: ");
+        scanf("%s", editPerson->email);
+        
+        
+    }
+    if (strcmp(selection, "firstName")==0) {
+        printf("Please enter the new first name: ");
+        scanf("%s", editPerson->firstName);
+    }
+    if (strcmp(selection, "last")==0) {
+        printf("Please enter the new last Name: ");
+        scanf("%s", editPerson->lastName);
+    }
+    if (strcmp(selection, "age")==0) {
+        printf("Please enter the new age: ");
+        scanf("%d", &editPerson->age);
+    }
+    if (strcmp(selection, "hometown")==0) {
+        printf("Please enter the new hometown: ");
+        scanf("%s", editPerson->homeTown);
+    }
+    if (strcmp(selection, "hobby")==0) {
+        printf("Please enter the new hobby: ");
+        scanf("%s", editPerson->hobby);
+    }
+        
+
+        
+        curr = head;
+        while(curr->next!=NULL) {
+            if(strcmp(curr->person.email,found->person.email)==0) {
+                curr->person= *editPerson;
+                return;
+            }
+            
+            curr = curr->next;
+        }
+    printf("The user has been edited!");
+}
+
+
+//creates a new connection node, and adds it to the front
+void createNewCNode(personList *person1, personList *person2){
+    connection* newConnection = (connection*)malloc(sizeof(connection));
+    
+    newConnection->friend_one=person1;
+    newConnection->friend_two=person2;
+    
+    
+    if(!connectionHead){
+        newConnection->next = NULL;
+        (connectionHead) = newConnection;
+    }else{
+        newConnection->next = (connectionHead);
+        (connectionHead) = newConnection;
+    }
+    
+    
+}
+
+
+
+//finds the person nodes in order to be passed into the connection nodes
+void Connect(char email1[], char email2[]){
+    struct Node* p1Location = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* p2Location = (struct Node*)malloc(sizeof(struct Node));
+    int emailFound1;
+    int emailFound2;
+    int connectionExists;
+    emailFound1= findEmail(email1);
+    emailFound2= findEmail(email2);
+    if (emailFound1==0) {
+        printf("\nThis email is not registered.");
+        return;
+    }
+    if (emailFound2==0) {
+        printf("\nThis email is not registered.");
+        return;
+    }
+    connectionExists= cExists(email1,email2);
+    if (connectionExists==1) {
+        printf("\nThis connection already exists!");
+        return;
+    }
+    *p1Location = findNode(email1);
+    *p2Location = findNode( email2);
+    createNewCNode( p1Location, p2Location);
+    printf("A connection has been made!");
+    
+}
+
+
+// use printConnection and printList to check the linked lists
+void menu(){
+    // creates head person
+    member * headInfo=malloc(sizeof(struct Person));
+    member * nullHead = malloc(sizeof(struct Person));
+    strcpy(nullHead->firstName, "NULL");
+    strcpy(nullHead->email, "NULL");
+    strcpy(nullHead->lastName, "NULL");
+    strcpy(nullHead->homeTown,"NULL");
+    strcpy(nullHead->hobby,"NULL");
+    addPersonList(*nullHead);
+    createNewCNode(nullHead, nullHead);
+    
+    
+    char email[50];
+    char email2[50];
+    int start = 1;
+    char action[50];
+    while(start == 1){
+        printf("\n\nSocial Network Menu\n");
+        printf("add - adds a user to the network\n");
+        printf("remove - removes a user from the network\n");
+        printf("connect - add a friendship between two users in the network\n");
+        printf("edit - edit any field in the network\n");
+        printf("quit - quit out of the network\n");
+        
+        scanf("%s", action);
+        
+        if (strcmp(action, "add") == 0){
+            printf("Please enter an email: ");
+            scanf("%s", email);
+            int emailFound;
+            emailFound = findEmail(email);
+            if (emailFound==1) {
+                printf("\nThis email is already registered.");
+            }
+            else {
+                *headInfo= add(email);
+                addPersonList(*headInfo);
+            }
+            
+        }
+        
+        if (strcmp(action, "remove") == 0){
+            printf("Please enter an email: ");
+            scanf("%s", email);
+            delete( email);
+            ;
+            
+        }
+        
+        if (strcmp(action, "edit") == 0){
+            printf("Please enter an email: ");
+            scanf("%s", email);
+            edit(email);
+            
+            
+            
+        }
+        
+        if (strcmp(action, "connect") == 0){
+            printf("Please enter the first email: ");
+            scanf("%s", email);
+            printf("Please enter the second email: ");
+            scanf("%s", email2);
+            Connect(email, email2);
+    
+        }
+        
+        if (strcmp(action, "quit") == 0){
+            exit(0);
+        }
+    }
+    
+}
+
+
+
+int main(void) {
+    menu();
+    
+    return 0;
+}
+
+
+
